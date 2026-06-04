@@ -1,30 +1,29 @@
 import { useState } from 'react';
-
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { useLoaderData } from 'react-router-dom';
 
 const JobDetails = () => {
   const [startDate, setStartDate] = useState(new Date());
+  const detailsData = useLoaderData();
+  // console.log(detailsData);
+  const { deadline, category, job_title, description, min_price, max_price } = detailsData;
 
   return (
     <div className="flex flex-col md:flex-row justify-around gap-5  items-center min-h-[calc(100vh-306px)] md:max-w-7xl mx-auto ">
       {/* Job Details */}
       <div className="flex-1  px-4 py-7 bg-white rounded-md shadow-md md:min-h-87.5">
         <div className="flex items-center justify-between">
-          <span className="text-sm font-light text-gray-800 ">Deadline: 28/05/2024</span>
+          <span className="text-sm font-light text-gray-800 ">Deadline: {deadline}</span>
           <span className="px-4 py-1 text-xs text-blue-800 uppercase bg-blue-200 rounded-full ">
-            Web Development
+            {category}
           </span>
         </div>
 
         <div>
-          <h1 className="mt-2 text-3xl font-semibold text-gray-800 ">Web Development</h1>
+          <h1 className="mt-2 text-3xl font-semibold text-gray-800 ">{job_title}</h1>
 
-          <p className="mt-2 text-lg text-gray-600 ">
-            Dramatically redefine bleeding-edge infrastructures after client-focused value.
-            Intrinsicly seize user-centric partnerships through out-of-the-box architectures.
-            Distinctively.
-          </p>
+          <p className="mt-2 text-lg text-gray-600 ">{description}</p>
           <p className="mt-6 text-sm font-bold text-gray-600 ">Buyer Details:</p>
           <div className="flex items-center gap-5">
             <div>
@@ -37,7 +36,9 @@ const JobDetails = () => {
               <img src="https://i.ibb.co.com/qsfs2TW/Ix-I18-R8-Y-400x400.jpg" alt="" />
             </div>
           </div>
-          <p className="mt-6 text-lg font-bold text-gray-600 ">Range: $500 - $600</p>
+          <p className="mt-6 text-lg font-bold text-gray-600 ">
+            Range: ${min_price} - ${max_price}
+          </p>
         </div>
       </div>
       {/* Place A Bid Form */}
