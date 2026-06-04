@@ -1,17 +1,18 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Root from '../layouts/Root';
-import AddJob from '../pages/AddJob';
 import AllJobs from '../pages/AllJobs';
 import Login from '../pages/Authentication/Login';
 import Register from '../pages/Authentication/Register';
 import BidRequests from '../pages/BidRequests';
 import ErrorPage from '../pages/ErrorPage';
 import Home from '../pages/Home';
+import HrAddJob from '../pages/HrAddJob';
+import HrPostedJobs from '../pages/HrPostedJobs';
 import JobDetails from '../pages/JobDetails';
 import MyBids from '../pages/MyBids';
-import MyPostedJobs from '../pages/MyPostedJobs';
 import UpdateJob from '../pages/UpdateJob';
 import PrivateRoute from './PrivateRoute';
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -27,21 +28,14 @@ const router = createBrowserRouter([
         element: <AllJobs />,
       },
       {
-        path: '/login',
-        element: <Login />,
-      },
-      {
-        path: '/registration',
-        element: <Register />,
-      },
-      {
-        path: '/job/:id',
+        path: '/jobs/:id',
         element: (
           <PrivateRoute>
             <JobDetails />
           </PrivateRoute>
         ),
       },
+
       {
         path: '/update/:id',
         element: (
@@ -51,10 +45,10 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: '/add-job',
+        path: '/hr-add-job',
         element: (
           <PrivateRoute>
-            <AddJob />
+            <HrAddJob></HrAddJob>
           </PrivateRoute>
         ),
       },
@@ -67,10 +61,10 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: '/my-posted-jobs',
+        path: '/hr-posted-jobs',
         element: (
           <PrivateRoute>
-            <MyPostedJobs />
+            <HrPostedJobs></HrPostedJobs>
           </PrivateRoute>
         ),
       },
@@ -81,6 +75,14 @@ const router = createBrowserRouter([
             <BidRequests />
           </PrivateRoute>
         ),
+      },
+      {
+        path: '/login',
+        element: <Login />,
+      },
+      {
+        path: '/register',
+        element: <Register />,
       },
     ],
   },
