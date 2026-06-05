@@ -36,7 +36,7 @@ const BuyerAddJob = () => {
       deadline,
       buyer,
     };
-    console.log(jobData);
+    // console.log(jobData);
 
     try {
       const res = await axios.post(`${import.meta.env.VITE_API_URL}/jobs`, jobData);
