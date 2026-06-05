@@ -7,37 +7,37 @@ const JobDetails = () => {
   const [startDate, setStartDate] = useState(new Date());
   const detailsData = useLoaderData();
   // console.log(detailsData);
-  const { deadline, category, job_title, description, min_price, max_price } = detailsData;
+  const { deadline, category, jobTitle, description, minPrice, maxPrice, buyer } = detailsData;
 
   return (
     <div className="flex flex-col md:flex-row justify-around gap-5  items-center min-h-[calc(100vh-306px)] md:max-w-7xl mx-auto ">
       {/* Job Details */}
       <div className="flex-1  px-4 py-7 bg-white rounded-md shadow-md md:min-h-87.5">
         <div className="flex items-center justify-between">
-          <span className="text-sm font-light text-gray-800 ">Deadline: {deadline}</span>
-          <span className="px-4 py-1 text-xs text-blue-800 uppercase bg-blue-200 rounded-full ">
+          <span className="text-sm font-light text-gray-800 ">
+            Deadline: {new Date(deadline).toLocaleDateString()}
+          </span>
+          <span className="px-4 py-1 text-xs text-blue-800 bg-blue-200 rounded-full ">
             {category}
           </span>
         </div>
 
         <div>
-          <h1 className="mt-2 text-3xl font-semibold text-gray-800 ">{job_title}</h1>
+          <h1 className="mt-2 text-3xl font-semibold text-gray-800 ">{jobTitle}</h1>
 
           <p className="mt-2 text-lg text-gray-600 ">{description}</p>
           <p className="mt-6 text-sm font-bold text-gray-600 ">Buyer Details:</p>
           <div className="flex items-center gap-5">
             <div>
-              <p className="mt-2 text-sm  text-gray-600 ">Name: Programming-Hero Instructors</p>
-              <p className="mt-2 text-sm  text-gray-600 ">
-                Email: instructors@programming-hero.com
-              </p>
+              <p className="mt-2 text-sm  text-gray-600 ">Name: {buyer?.name}</p>
+              <p className="mt-2 text-sm  text-gray-600 ">Email: {buyer?.email}</p>
             </div>
             <div className="rounded-full object-cover overflow-hidden w-14 h-14">
-              <img src="https://i.ibb.co.com/qsfs2TW/Ix-I18-R8-Y-400x400.jpg" alt="" />
+              <img src={buyer?.photo} alt="Photo" />
             </div>
           </div>
           <p className="mt-6 text-lg font-bold text-gray-600 ">
-            Range: ${min_price} - ${max_price}
+            Range: ${minPrice} - ${maxPrice}
           </p>
         </div>
       </div>

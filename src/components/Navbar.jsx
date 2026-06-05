@@ -5,6 +5,7 @@ import { AuthContext } from '../providers/AuthProvider';
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
+
   return (
     <div className="navbar bg-base-100 shadow-sm container px-4 mx-auto">
       <div className="flex-1">
@@ -19,7 +20,7 @@ const Navbar = () => {
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/jobs">All Jobs</Link>
+            <Link to="/allJobs">All Jobs</Link>
           </li>
 
           {!user && (
@@ -41,19 +42,20 @@ const Navbar = () => {
               className="menu menu-sm dropdown-content mt-3 z-1 p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <Link to="/add-job" className="justify-between">
-                  Add Job
+                <Link to="/buyer-add-job" className="justify-between">
+                  Buyer Add Job
                 </Link>
               </li>
               <li>
-                <Link to="/my-posted-jobs">My Posted Jobs</Link>
+                <Link to="/buyer-posted-jobs">Buyer Posted Jobs</Link>
+              </li>
+              <li>
+                <Link to="/buyer-bid-requests">Buyer Bid Requests</Link>
               </li>
               <li>
                 <Link to="/my-bids">My Bids</Link>
               </li>
-              <li>
-                <Link to="/bid-requests">Bid Requests</Link>
-              </li>
+
               <li className="mt-2">
                 <button onClick={logOut} className="bg-gray-200 block text-center">
                   Logout

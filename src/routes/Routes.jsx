@@ -3,14 +3,14 @@ import Root from '../layouts/Root';
 import AllJobs from '../pages/AllJobs';
 import Login from '../pages/Authentication/Login';
 import Register from '../pages/Authentication/Register';
-import BidRequests from '../pages/BidRequests';
+import BuyerAddJob from '../pages/BuyerAddJob';
+import BuyerBidRequests from '../pages/BuyerBidRequests';
+import BuyerPostedJobs from '../pages/BuyerPostedJobs';
+import BuyerUpdateJob from '../pages/BuyerUpdateJob';
 import ErrorPage from '../pages/ErrorPage';
 import Home from '../pages/Home';
-import HrAddJob from '../pages/HrAddJob';
-import HrPostedJobs from '../pages/HrPostedJobs';
 import JobDetails from '../pages/JobDetails';
 import MyBids from '../pages/MyBids';
-import UpdateJob from '../pages/UpdateJob';
 import PrivateRoute from './PrivateRoute';
 
 const router = createBrowserRouter([
@@ -24,7 +24,7 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: '/jobs',
+        path: '/allJobs',
         element: <AllJobs />,
       },
       {
@@ -36,23 +36,6 @@ const router = createBrowserRouter([
         ),
         loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/jobs/${params.id}`),
       },
-
-      {
-        path: '/update/:id',
-        element: (
-          <PrivateRoute>
-            <UpdateJob />
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: '/hr-add-job',
-        element: (
-          <PrivateRoute>
-            <HrAddJob></HrAddJob>
-          </PrivateRoute>
-        ),
-      },
       {
         path: '/my-bids',
         element: (
@@ -62,18 +45,35 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: '/hr-posted-jobs',
+        path: '/update/:id',
         element: (
           <PrivateRoute>
-            <HrPostedJobs></HrPostedJobs>
+            <BuyerUpdateJob></BuyerUpdateJob>
           </PrivateRoute>
         ),
       },
       {
-        path: '/bid-requests',
+        path: '/buyer-add-job',
         element: (
           <PrivateRoute>
-            <BidRequests />
+            <BuyerAddJob></BuyerAddJob>
+          </PrivateRoute>
+        ),
+      },
+
+      {
+        path: '/buyer-posted-jobs',
+        element: (
+          <PrivateRoute>
+            <BuyerPostedJobs></BuyerPostedJobs>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: '/buyer-bid-requests',
+        element: (
+          <PrivateRoute>
+            <BuyerBidRequests></BuyerBidRequests>
           </PrivateRoute>
         ),
       },
