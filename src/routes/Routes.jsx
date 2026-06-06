@@ -8,9 +8,8 @@ import BuyerBidRequests from '../pages/BuyerBidRequests';
 import BuyerPostedJobs from '../pages/BuyerPostedJobs';
 import BuyerUpdateJob from '../pages/BuyerUpdateJob';
 import ErrorPage from '../pages/ErrorPage';
-import Home from '../pages/Home';
-
 import FreelancerBids from '../pages/FreelancerBids';
+import Home from '../pages/Home';
 import JobCardDetails from '../pages/JobCardDetails';
 import PrivateRoute from './PrivateRoute';
 
@@ -29,13 +28,29 @@ const router = createBrowserRouter([
         element: <AllJobs />,
       },
       {
-        path: '/jobs/:id',
+        path: '/login',
+        element: <Login />,
+      },
+      {
+        path: '/register',
+        element: <Register />,
+      },
+      {
+        path: '/jobs/details/:id',
         element: (
           <PrivateRoute>
             <JobCardDetails></JobCardDetails>
           </PrivateRoute>
         ),
         loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/jobs/${params.id}`),
+      },
+      {
+        path: '/jobs/update/:id',
+        element: (
+          <PrivateRoute>
+            <BuyerUpdateJob></BuyerUpdateJob>
+          </PrivateRoute>
+        ),
       },
       {
         path: '/freelancer-bids',
@@ -45,14 +60,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
-      {
-        path: '/update/:id',
-        element: (
-          <PrivateRoute>
-            <BuyerUpdateJob></BuyerUpdateJob>
-          </PrivateRoute>
-        ),
-      },
+
       {
         path: '/buyer-add-job',
         element: (
@@ -77,14 +85,6 @@ const router = createBrowserRouter([
             <BuyerBidRequests></BuyerBidRequests>
           </PrivateRoute>
         ),
-      },
-      {
-        path: '/login',
-        element: <Login />,
-      },
-      {
-        path: '/register',
-        element: <Register />,
       },
     ],
   },

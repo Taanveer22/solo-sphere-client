@@ -94,24 +94,24 @@ const BuyerPostedJobs = () => {
                 {/* body */}
                 <tbody className="bg-white divide-y divide-gray-200 ">
                   {postedJobs.map((jobElement) => (
-                    <tr key={jobElement._id}>
+                    <tr key={jobElement?._id}>
                       <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                        {jobElement.jobTitle}
+                        {jobElement?.jobTitle}
                       </td>
 
                       <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                        {jobElement.deadline}
+                        {new Date(jobElement?.deadline).toLocaleDateString()}
                       </td>
 
                       <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                        ${jobElement.minPrice}-${jobElement.maxPrice}
+                        ${jobElement?.minPrice}-${jobElement?.maxPrice}
                       </td>
                       <td className="px-4 py-4 text-sm whitespace-nowrap">
                         <div className="flex items-center gap-x-2">
                           <p
                             className={`px-3 py-1  text-blue-500 bg-blue-100/60 text-xs  rounded-full`}
                           >
-                            {jobElement.category}
+                            {jobElement?.category}
                           </p>
                         </div>
                       </td>
@@ -139,7 +139,7 @@ const BuyerPostedJobs = () => {
                           </button>
 
                           <Link
-                            to={`/update/1`}
+                            to={`/jobs/update/${jobElement?._id}`}
                             className="text-gray-500 transition-colors duration-200   hover:text-yellow-500 focus:outline-none"
                           >
                             <svg

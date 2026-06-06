@@ -53,8 +53,8 @@ const BuyerAddJob = () => {
   return (
     <div className="flex justify-center items-center min-h-[calc(100vh-306px)] my-12">
       <section className=" p-2 md:p-6 mx-auto bg-white rounded-md shadow-md ">
-        <h2 className="text-lg font-semibold text-gray-700 capitalize ">
-          Add a job for freelancers
+        <h2 className="text-2xl text-center font-semibold text-gray-700 capitalize ">
+          Add job data
         </h2>
 
         <form onSubmit={handleAddJobFormSubmit}>
@@ -146,7 +146,7 @@ const BuyerAddJob = () => {
           </div>
           <div className="flex justify-end mt-6">
             <button className="disabled:cursor-not-allowed px-8 py-2.5 leading-5 text-white transition-colors duration-300 transhtmlForm bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
-              Add Job
+              Add
             </button>
           </div>
         </form>

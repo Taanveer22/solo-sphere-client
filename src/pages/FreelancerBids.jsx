@@ -89,12 +89,10 @@ const FreelancerBids = () => {
                 <tbody className="bg-white divide-y divide-gray-200 ">
                   {bids.map((bidElement) => (
                     <tr key={bidElement._id}>
-                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                        {bidElement?.title}
-                      </td>
+                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">title</td>
 
                       <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                        {bidElement?.deadline}
+                        {new Date(bidElement?.deadline).toLocaleDateString()}
                       </td>
 
                       <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
