@@ -3,12 +3,13 @@ import { useContext, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import toast from 'react-hot-toast';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../providers/AuthProvider';
 
 const JobCardDetails = () => {
   const [startDate, setStartDate] = useState(new Date());
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const detailsData = useLoaderData();
   // console.log(detailsData);
   const { deadline, category, jobTitle, description, minPrice, maxPrice, buyer } = detailsData;
@@ -36,12 +37,13 @@ const JobCardDetails = () => {
       freelancerEmail,
       buyerEmail,
     };
-    console.log(bidData);
+    // console.log(bidData);
 
     try {
       const res = await axios.post(`${import.meta.env.VITE_API_URL}/bids`, bidData);
       // console.log(res.data);
       res?.data?.insertedId && toast.success('Bid complete on this job successfully');
+      navigate('/freelancer-bids', { replace: true });
     } catch (error) {
       console.log(error);
     }

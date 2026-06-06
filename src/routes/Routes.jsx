@@ -10,8 +10,8 @@ import BuyerUpdateJob from '../pages/BuyerUpdateJob';
 import ErrorPage from '../pages/ErrorPage';
 import Home from '../pages/Home';
 
+import FreelancerBids from '../pages/FreelancerBids';
 import JobCardDetails from '../pages/JobCardDetails';
-import MyBids from '../pages/MyBids';
 import PrivateRoute from './PrivateRoute';
 
 const router = createBrowserRouter([
@@ -38,10 +38,10 @@ const router = createBrowserRouter([
         loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/jobs/${params.id}`),
       },
       {
-        path: '/my-bids',
+        path: '/freelancer-bids',
         element: (
           <PrivateRoute>
-            <MyBids></MyBids>
+            <FreelancerBids></FreelancerBids>
           </PrivateRoute>
         ),
       },

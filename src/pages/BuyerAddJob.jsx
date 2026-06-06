@@ -3,11 +3,13 @@ import { useContext, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../providers/AuthProvider';
 
 const BuyerAddJob = () => {
   const [startDate, setStartDate] = useState(new Date());
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleAddJobFormSubmit = async (e) => {
     e.preventDefault();
@@ -42,6 +44,7 @@ const BuyerAddJob = () => {
       const res = await axios.post(`${import.meta.env.VITE_API_URL}/jobs`, jobData);
       // console.log(res.data);
       res?.data?.insertedId && toast.success('Add this job successfully');
+      navigate('/buyer-posted-jobs', { replace: true });
     } catch (error) {
       console.log(error);
     }
@@ -50,7 +53,9 @@ const BuyerAddJob = () => {
   return (
     <div className="flex justify-center items-center min-h-[calc(100vh-306px)] my-12">
       <section className=" p-2 md:p-6 mx-auto bg-white rounded-md shadow-md ">
-        <h2 className="text-lg font-semibold text-gray-700 capitalize ">Post a Job</h2>
+        <h2 className="text-lg font-semibold text-gray-700 capitalize ">
+          Add a job for freelancers
+        </h2>
 
         <form onSubmit={handleAddJobFormSubmit}>
           <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
