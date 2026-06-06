@@ -11,7 +11,7 @@ const BuyerPostedJobs = () => {
   const handleDeletePostedJob = async (id) => {
     // console.log(id);
     try {
-      const res = await axios.delete(`${import.meta.env.VITE_API_URL}/jobs/buyer/${id}`);
+      const res = await axios.delete(`${import.meta.env.VITE_API_URL}/jobs/table/${id}`);
       // console.log(res.data);
       res?.data?.deletedCount > 0 && toast.error('Job deleted done');
       const remainingJobs = postedJobs.filter((jobElement) => jobElement._id !== id);
@@ -26,7 +26,7 @@ const BuyerPostedJobs = () => {
 
     const getPostedJobs = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/jobs/buyer/${user?.email}`);
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/jobs/table/${user?.email}`);
         // console.log(res.data);
         setPostedJobs(res.data);
       } catch (error) {

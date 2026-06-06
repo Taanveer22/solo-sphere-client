@@ -38,7 +38,7 @@ const BuyerUpdateJob = () => {
 
     try {
       const res = await axios.put(
-        `${import.meta.env.VITE_API_URL}/jobs/buyer/${params.id}`,
+        `${import.meta.env.VITE_API_URL}/jobs/table/${params.id}`,
         jobData
       );
       // console.log(res.data);

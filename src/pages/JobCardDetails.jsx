@@ -10,17 +10,21 @@ const JobCardDetails = () => {
   const [startDate, setStartDate] = useState(new Date());
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
-  const detailsData = useLoaderData();
-  // console.log(detailsData);
-  const { deadline, category, jobTitle, description, minPrice, maxPrice, buyer } = detailsData;
+  const loadedData = useLoaderData();
+  // console.log(loadedData);
+  const { deadline, category, jobTitle, description, minPrice, maxPrice, buyer } = loadedData;
 
   const handleBidFormSubmit = async (e) => {
     e.preventDefault();
+    const jobId = loadedData?._id;
+    const buyerEmail = loadedData?.buyer?.email;
+    const jobTitle = loadedData?.jobTitle;
+    const category = loadedData?.category;
+    const status = 'pending';
+    const freelancerEmail = user?.email;
     const bidPrice = e.target.price.value;
     const comment = e.target.comment.value;
     const deadline = startDate;
-    const freelancerEmail = user?.email;
-    const buyerEmail = detailsData?.buyer?.email;
 
     if (buyerEmail === freelancerEmail) {
       return toast.error('Action not permitted');
@@ -31,11 +35,15 @@ const JobCardDetails = () => {
     }
 
     const bidData = {
+      jobId,
+      buyerEmail,
+      jobTitle,
+      category,
+      status,
+      freelancerEmail,
       bidPrice,
       comment,
       deadline,
-      freelancerEmail,
-      buyerEmail,
     };
     // console.log(bidData);
 
