@@ -11,7 +11,7 @@ const TabCategories = () => {
     const getJobs = async () => {
       try {
         const res = await axios.get(`${import.meta.env.VITE_API_URL}/jobs`);
-        console.log(res.data);
+        // console.log(res.data);
         setJobs(res.data);
       } catch (error) {
         console.log(error);
@@ -24,7 +24,7 @@ const TabCategories = () => {
     <Tabs>
       <div className="container px-6 py-10 mx-auto">
         <h1 className="text-2xl font-semibold text-center text-gray-800 capitalize lg:text-3xl ">
-          Browse Jobs By Categories{jobs.length}
+          Browse Jobs By Categories
         </h1>
 
         <p className="max-w-2xl mx-auto my-6 text-center text-gray-500 ">

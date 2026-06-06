@@ -7,9 +7,13 @@ const FreelancerBids = () => {
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
+    if (!user?.email) return;
+
     const getBids = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/bids/${user?.email}`);
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_URL}/bids/freelancer/${user?.email}`
+        );
         // console.log(res.data);
         setBids(res.data);
       } catch (error) {
@@ -17,7 +21,7 @@ const FreelancerBids = () => {
       }
     };
     getBids();
-  }, [user]);
+  }, [user?.email]);
 
   return (
     <section className="container px-4 mx-auto my-12">
