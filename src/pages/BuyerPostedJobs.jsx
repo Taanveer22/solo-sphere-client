@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../providers/AuthProvider';
 
@@ -7,13 +8,26 @@ const BuyerPostedJobs = () => {
   const [postedJobs, setPostedJobs] = useState([]);
   const { user } = useContext(AuthContext);
 
+  const handleDeletePostedJob = async (id) => {
+    // console.log(id);
+    try {
+      const res = await axios.delete(`${import.meta.env.VITE_API_URL}/jobs/buyer/${id}`);
+      // console.log(res.data);
+      res?.data?.deletedCount > 0 && toast.error('Job deleted done');
+      const remainingJobs = postedJobs.filter((jobElement) => jobElement._id !== id);
+      setPostedJobs(remainingJobs);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     if (!user?.email) return;
 
     const getPostedJobs = async () => {
       try {
         const res = await axios.get(`${import.meta.env.VITE_API_URL}/jobs/buyer/${user?.email}`);
-        console.log(res.data);
+        // console.log(res.data);
         setPostedJobs(res.data);
       } catch (error) {
         console.log(error);
@@ -73,7 +87,7 @@ const BuyerPostedJobs = () => {
                     </th>
 
                     <th className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
-                      Edit
+                      Actions
                     </th>
                   </tr>
                 </thead>
@@ -104,7 +118,10 @@ const BuyerPostedJobs = () => {
 
                       <td className="px-4 py-4 text-sm whitespace-nowrap">
                         <div className="flex items-center gap-x-6">
-                          <button className="text-gray-500 transition-colors duration-200   hover:text-red-500 focus:outline-none">
+                          <button
+                            onClick={() => handleDeletePostedJob(jobElement?._id)}
+                            className="text-gray-500 transition-colors duration-200   hover:text-red-500 focus:outline-none"
+                          >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               fill="none"
