@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useCallback, useContext, useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { AuthContext } from '../providers/AuthProvider';
 
 const BuyerBidRequests = () => {
@@ -16,8 +17,9 @@ const BuyerBidRequests = () => {
       const res = await axios.patch(`${import.meta.env.VITE_API_URL}/bids/dashboard/${id}`, {
         status: currStatus, // ✅ descriptive clear key
       });
-      getBidsData();
       console.log(res.data);
+      res?.data?.modifiedCount > 0 && toast.success('status updated');
+      getBidsData();
     } catch (error) {
       console.log(error);
     }
@@ -146,6 +148,7 @@ const BuyerBidRequests = () => {
                             onClick={() =>
                               handleChangeStatus(bidElement?._id, bidElement?.status, 'in progress')
                             }
+                            disabled={bidElement?.status === 'completed'}
                             className="disabled:cursor-not-allowed text-gray-500 transition-colors duration-200   hover:text-red-500 focus:outline-none"
                           >
                             <svg
@@ -168,6 +171,7 @@ const BuyerBidRequests = () => {
                             onClick={() =>
                               handleChangeStatus(bidElement?._id, bidElement?.status, 'rejected')
                             }
+                            disabled={bidElement?.status === 'completed'}
                             className="disabled:cursor-not-allowed text-gray-500 transition-colors duration-200   hover:text-yellow-500 focus:outline-none"
                           >
                             <svg
