@@ -1,28 +1,42 @@
 import axios from 'axios';
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../providers/AuthProvider';
 
 const BuyerBidRequests = () => {
   const [requestBids, setRequestBids] = useState([]);
   const { user } = useContext(AuthContext);
 
-  useEffect(() => {
+  const handleChangeStatus = async (id, prevStatus, currStatus) => {
+    console.log(id, prevStatus, currStatus);
+    if (prevStatus === currStatus) {
+      console.log('no change same status');
+      return;
+    }
+    try {
+      const res = await axios.patch(`${import.meta.env.VITE_API_URL}/bids/dashboard/${id}`, {
+        status: currStatus, // ✅ descriptive clear key
+      });
+      getBidsData();
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getBidsData = useCallback(async () => {
     if (!user?.email) return;
-
-    const getBids = async () => {
-      try {
-        const res = await axios.get(
-          `${import.meta.env.VITE_API_URL}/bids/dashboard/${user?.email}`
-        );
-        console.log(res.data);
-        setRequestBids(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    getBids();
+    try {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/bids/dashboard/${user?.email}`);
+      // console.log(res.data);
+      setRequestBids(res.data);
+    } catch (error) {
+      console.log(error);
+    }
   }, [user?.email]);
+
+  useEffect(() => {
+    getBidsData();
+  }, [getBidsData]);
 
   return (
     <section className="container px-4 mx-auto my-12">
@@ -127,7 +141,13 @@ const BuyerBidRequests = () => {
                       </td>
                       <td className="px-4 py-4 text-sm whitespace-nowrap">
                         <div className="flex items-center gap-x-6">
-                          <button className="disabled:cursor-not-allowed text-gray-500 transition-colors duration-200   hover:text-red-500 focus:outline-none">
+                          {/* action btn 1 */}
+                          <button
+                            onClick={() =>
+                              handleChangeStatus(bidElement?._id, bidElement?.status, 'in progress')
+                            }
+                            className="disabled:cursor-not-allowed text-gray-500 transition-colors duration-200   hover:text-red-500 focus:outline-none"
+                          >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               fill="none"
@@ -143,8 +163,13 @@ const BuyerBidRequests = () => {
                               />
                             </svg>
                           </button>
-
-                          <button className="disabled:cursor-not-allowed text-gray-500 transition-colors duration-200   hover:text-yellow-500 focus:outline-none">
+                          {/* action btn 2 */}
+                          <button
+                            onClick={() =>
+                              handleChangeStatus(bidElement?._id, bidElement?.status, 'rejected')
+                            }
+                            className="disabled:cursor-not-allowed text-gray-500 transition-colors duration-200   hover:text-yellow-500 focus:outline-none"
+                          >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               fill="none"

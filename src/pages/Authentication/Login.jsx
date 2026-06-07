@@ -9,18 +9,17 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location?.state || '/';
-  console.log(from);
+  // console.log(from);
   const { signIn, signInWithGoogle } = useContext(AuthContext);
 
   // Google Signin
   const handleGoogleSignIn = async () => {
     try {
       await signInWithGoogle();
-
       toast.success('Signin Successful');
       navigate(from, { replace: true });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       toast.error(err?.message);
     }
   };
@@ -28,16 +27,15 @@ const Login = () => {
   // Email Password Signin
   const handleSignIn = async (e) => {
     e.preventDefault();
-    const form = e.target;
-    const email = form.email.value;
-    const pass = form.password.value;
-    console.log({ email, pass });
+    const email = e.target.email.value;
+    const pass = e.target.password.value;
+    // console.log({ email, pass });
     try {
       await signIn(email, pass);
       toast.success('Signin Successful');
       navigate(from, { replace: true });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       toast.error(err?.message);
     }
   };
