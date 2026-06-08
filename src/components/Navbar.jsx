@@ -1,10 +1,25 @@
+import axios from 'axios';
 import { useContext } from 'react';
+import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import logo from '../assets/images/logo.png';
 import { AuthContext } from '../providers/AuthProvider';
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
+
+  const handleLogOut = async () => {
+    try {
+      await logOut();
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/jwt/logout`, {
+        withCredentials: true,
+      });
+      toast.success('logout done');
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="navbar bg-base-100 shadow-sm container px-4 mx-auto">
@@ -57,7 +72,7 @@ const Navbar = () => {
               </li>
 
               <li className="mt-2">
-                <button onClick={logOut} className="bg-gray-200 block text-center">
+                <button onClick={handleLogOut} className="bg-gray-200 block text-center">
                   Logout
                 </button>
               </li>

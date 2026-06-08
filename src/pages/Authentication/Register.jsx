@@ -10,6 +10,7 @@ const Registration = () => {
   const navigate = useNavigate();
   const { signInWithGoogle, createUser, updateUserProfile, setUser } = useContext(AuthContext);
 
+  // User Registration
   const handleSignUp = async (e) => {
     e.preventDefault();
     const form = e.target;
