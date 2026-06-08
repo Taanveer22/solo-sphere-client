@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useContext } from 'react';
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
@@ -20,9 +21,19 @@ const Registration = () => {
     try {
       //2. User Registration
       const result = await createUser(email, pass);
-      console.log(result);
+      console.log(result?.user?.email);
       await updateUserProfile(name, photo);
       setUser({ ...result.user, photoURL: photo, displayName: name });
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/jwt/login`,
+        {
+          email: result?.user?.email,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      console.log(res.data);
       toast.success('Signup Successful');
       navigate('/');
     } catch (err) {
@@ -35,7 +46,6 @@ const Registration = () => {
   const handleGoogleSignIn = async () => {
     try {
       await signInWithGoogle();
-
       toast.success('Signin Successful');
       navigate('/');
     } catch (err) {

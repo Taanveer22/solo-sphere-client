@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useContext } from 'react';
 import toast from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -31,7 +32,18 @@ const Login = () => {
     const pass = e.target.password.value;
     // console.log({ email, pass });
     try {
-      await signIn(email, pass);
+      const result = await signIn(email, pass);
+      console.log(result?.user?.email);
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/jwt/login`,
+        {
+          email: result?.user?.email,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      console.log(res?.data);
       toast.success('Signin Successful');
       navigate(from, { replace: true });
     } catch (err) {
