@@ -28,7 +28,9 @@ const BuyerBidRequests = () => {
   const getBidsData = useCallback(async () => {
     if (!user?.email) return;
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/bids/dashboard/${user?.email}`);
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/bids/dashboard/${user?.email}`, {
+        withCredentials: true,
+      });
       // console.log(res.data);
       setRequestBids(res.data);
     } catch (error) {

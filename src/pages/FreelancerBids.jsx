@@ -37,7 +37,9 @@ const FreelancerBids = () => {
   const getBidsData = useCallback(async () => {
     if (!user?.email) return;
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/bids/table/${user?.email}`);
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/bids/table/${user?.email}`, {
+        withCredentials: true,
+      });
       // console.log(res.data);
       setBids(res.data);
     } catch (error) {

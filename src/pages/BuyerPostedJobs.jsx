@@ -26,7 +26,9 @@ const BuyerPostedJobs = () => {
 
     const getPostedJobs = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/jobs/table/${user?.email}`);
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/jobs/table/${user?.email}`, {
+          withCredentials: true,
+        });
         // console.log(res.data);
         setPostedJobs(res.data);
       } catch (error) {
