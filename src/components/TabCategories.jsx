@@ -1,24 +1,27 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
+import useAxiosCommon from '../hooks/useAxiosCommon';
 import JobCard from './JobCard';
 
 const TabCategories = () => {
   const [jobs, setJobs] = useState([]);
+  const axiosCommon = useAxiosCommon();
 
   useEffect(() => {
     const getJobs = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/jobs`);
+        const res = await axiosCommon.get(`/jobs`);
         // console.log(res.data);
         setJobs(res.data);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
+        toast.error(error?.message);
       }
     };
     getJobs();
-  }, []);
+  }, [axiosCommon]);
 
   return (
     <Tabs>

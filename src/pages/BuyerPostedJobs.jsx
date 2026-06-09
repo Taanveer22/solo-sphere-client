@@ -1,23 +1,25 @@
-import axios from 'axios';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../providers/AuthProvider';
+import useAuth from '../hooks/useAuth';
+import useAxiosSecure from '../hooks/useAxiosSecure';
 
 const BuyerPostedJobs = () => {
   const [postedJobs, setPostedJobs] = useState([]);
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
 
   const handleDeletePostedJob = async (id) => {
     // console.log(id);
     try {
-      const res = await axios.delete(`${import.meta.env.VITE_API_URL}/jobs/table/${id}`);
+      const res = await axiosSecure.delete(`/jobs/table/${id}`);
       // console.log(res.data);
       res?.data?.deletedCount > 0 && toast.error('Job deleted done');
       const remainingJobs = postedJobs.filter((jobElement) => jobElement._id !== id);
       setPostedJobs(remainingJobs);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      toast.error(error?.message);
     }
   };
 
@@ -26,17 +28,16 @@ const BuyerPostedJobs = () => {
 
     const getPostedJobs = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/jobs/table/${user?.email}`, {
-          withCredentials: true,
-        });
+        const res = await axiosSecure.get(`/jobs/table/${user?.email}`);
         // console.log(res.data);
         setPostedJobs(res.data);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
+        toast.error(error?.message);
       }
     };
     getPostedJobs();
-  }, [user?.email]);
+  }, [user?.email, axiosSecure]);
 
   return (
     <section className="container px-4 mx-auto pt-12">

@@ -1,51 +1,55 @@
-import axios from 'axios';
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { AuthContext } from '../providers/AuthProvider';
+import useAuth from '../hooks/useAuth';
+import useAxiosSecure from '../hooks/useAxiosSecure';
 
 const FreelancerBids = () => {
   const [bids, setBids] = useState([]);
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
 
   const handleChangeStatus = async (id, currStatus) => {
-    console.log(id, currStatus);
+    // console.log(id, currStatus);
     try {
-      const res = await axios.patch(`${import.meta.env.VITE_API_URL}/bids/dashboard/${id}`, {
+      const res = await axiosSecure.patch(`/bids/dashboard/${id}`, {
         status: currStatus, // ✅ descriptive clear key
       });
-      console.log(res.data);
+      // console.log(res.data);
       res?.data?.modifiedCount > 0 && toast.success('status updated');
       getBidsData();
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      toast.error(error?.message);
     }
   };
 
   const handleDeleteBid = async (id) => {
     // console.log(id);
     try {
-      const res = await axios.delete(`${import.meta.env.VITE_API_URL}/bids/table/${id}`);
+      const res = await axiosSecure.delete(`bids/table/${id}`);
       // console.log(res.data);
       res?.data?.deletedCount > 0 && toast.error('Bid deleted done');
       const remainingBids = bids.filter((bidElement) => bidElement._id !== id);
       setBids(remainingBids);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      toast.error(error?.message);
     }
   };
 
   const getBidsData = useCallback(async () => {
     if (!user?.email) return;
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/bids/table/${user?.email}`, {
+      const res = await axiosSecure.get(`/bids/table/${user?.email}`, {
         withCredentials: true,
       });
       // console.log(res.data);
       setBids(res.data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      toast.error(error?.message);
     }
-  }, [user?.email]);
+  }, [user?.email, axiosSecure]);
 
   useEffect(() => {
     getBidsData();

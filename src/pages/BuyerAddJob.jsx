@@ -1,14 +1,15 @@
-import axios from 'axios';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../providers/AuthProvider';
+import useAuth from '../hooks/useAuth';
+import useAxiosSecure from '../hooks/useAxiosSecure';
 
 const BuyerAddJob = () => {
   const [startDate, setStartDate] = useState(new Date());
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
 
   const handleAddJobFormSubmit = async (e) => {
@@ -41,12 +42,13 @@ const BuyerAddJob = () => {
     // console.log(jobData);
 
     try {
-      const res = await axios.post(`${import.meta.env.VITE_API_URL}/jobs`, jobData);
+      const res = await axiosSecure.post(`/jobs`, jobData);
       // console.log(res.data);
       res?.data?.insertedId && toast.success('Add this job successfully');
       navigate('/buyer-posted-jobs', { replace: true });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      toast.error(error?.message);
     }
   };
 

@@ -1,42 +1,43 @@
-import axios from 'axios';
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { AuthContext } from '../providers/AuthProvider';
+import useAuth from '../hooks/useAuth';
+import useAxiosSecure from '../hooks/useAxiosSecure';
 
 const BuyerBidRequests = () => {
   const [requestBids, setRequestBids] = useState([]);
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
 
   const handleChangeStatus = async (id, prevStatus, currStatus) => {
-    console.log(id, prevStatus, currStatus);
+    // console.log(id, prevStatus, currStatus);
     if (prevStatus === currStatus) {
-      console.log('no change same status');
+      toast.error('no change same status');
       return;
     }
     try {
-      const res = await axios.patch(`${import.meta.env.VITE_API_URL}/bids/dashboard/${id}`, {
+      const res = await axiosSecure.patch(`/bids/dashboard/${id}`, {
         status: currStatus, // ✅ descriptive clear key
       });
-      console.log(res.data);
+      // console.log(res.data);
       res?.data?.modifiedCount > 0 && toast.success('status updated');
       getBidsData();
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      toast.error(error?.message);
     }
   };
 
   const getBidsData = useCallback(async () => {
     if (!user?.email) return;
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/bids/dashboard/${user?.email}`, {
-        withCredentials: true,
-      });
+      const res = await axiosSecure.get(`/bids/dashboard/${user?.email}`);
       // console.log(res.data);
       setRequestBids(res.data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      toast.error(error?.message);
     }
-  }, [user?.email]);
+  }, [user?.email, axiosSecure]);
 
   useEffect(() => {
     getBidsData();
@@ -65,7 +66,7 @@ const BuyerBidRequests = () => {
                       className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500"
                     >
                       <div className="flex items-center gap-x-3">
-                        <span>Title</span>
+                        <span>Bidders Email</span>
                       </div>
                     </th>
                     <th
@@ -73,7 +74,7 @@ const BuyerBidRequests = () => {
                       className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500"
                     >
                       <div className="flex items-center gap-x-3">
-                        <span>Bidders Email</span>
+                        <span>Title</span>
                       </div>
                     </th>
 
@@ -117,10 +118,10 @@ const BuyerBidRequests = () => {
                   {requestBids.map((bidElement) => (
                     <tr key={bidElement?._id}>
                       <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                        {bidElement?.jobTitle}
+                        {bidElement?.freelancerEmail}
                       </td>
                       <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                        {bidElement?.freelancerEmail}
+                        {bidElement?.jobTitle}
                       </td>
 
                       <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">

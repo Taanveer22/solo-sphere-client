@@ -1,16 +1,17 @@
-import axios from 'axios';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import toast from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
-import { AuthContext } from '../providers/AuthProvider';
+import useAuth from '../hooks/useAuth';
+import useAxiosSecure from '../hooks/useAxiosSecure';
 
 const BuyerUpdateJob = () => {
   const params = useParams();
   // console.log(params);
   const [startDate, setStartDate] = useState(new Date());
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
 
   const handleUpdateJobFormSubmit = async (e) => {
@@ -37,15 +38,13 @@ const BuyerUpdateJob = () => {
     }
 
     try {
-      const res = await axios.put(
-        `${import.meta.env.VITE_API_URL}/jobs/table/${params.id}`,
-        jobData
-      );
+      const res = await axiosSecure.put(`/jobs/table/${params.id}`, jobData);
       // console.log(res.data);
       res?.data?.modifiedCount > 0 && toast.success('Updated job successfully');
       navigate('/buyer-posted-jobs', { replace: true });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      toast.error(error?.message);
     }
   };
 
