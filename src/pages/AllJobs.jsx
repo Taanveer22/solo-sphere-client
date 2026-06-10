@@ -1,6 +1,24 @@
+import { useEffect, useState } from 'react';
 import JobCard from '../components/JobCard';
+import useAxiosCommon from '../hooks/useAxiosCommon';
 
 const AllJobs = () => {
+  const [jobs, setJobs] = useState([]);
+  const axiosCommon = useAxiosCommon();
+
+  useEffect(() => {
+    const getJobs = async () => {
+      try {
+        const res = await axiosCommon.get(`/jobs`);
+        // console.log(res.data);
+        setJobs(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getJobs();
+  }, [axiosCommon]);
+
   return (
     <div className="container px-6 py-10 mx-auto min-h-[calc(100vh-306px)] flex flex-col justify-between">
       <div>
@@ -39,14 +57,9 @@ const AllJobs = () => {
           <button className="btn">Reset</button>
         </div>
         <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          <JobCard />
-          <JobCard />
-          <JobCard />
-          <JobCard />
-          <JobCard />
-          <JobCard />
-          <JobCard />
-          <JobCard />
+          {jobs.map((jobElement) => (
+            <JobCard key={jobElement?._id} jobElement={jobElement}></JobCard>
+          ))}
         </div>
       </div>
     </div>
