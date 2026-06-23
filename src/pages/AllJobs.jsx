@@ -82,7 +82,11 @@ const AllJobs = () => {
 
         {/* pagination buttons */}
         <div className="flex justify-center gap-4 mt-8 xl:mt-16">
-          <button className="px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+          <button
+            onClick={() => handlePaginationBtnClick(currentPage - 1)}
+            disabled={currentPage === 0}
+            className={`${currentPage === 0 ? 'bg-gray-300 cursor-not-allowed' : 'bg-gray-600'} px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform rounded-lg`}
+          >
             Prev
           </button>
 
@@ -96,7 +100,15 @@ const AllJobs = () => {
             </button>
           ))}
 
-          <button className="px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+          <button
+            onClick={() => handlePaginationBtnClick(currentPage + 1)}
+            disabled={currentPage === paginationPages.length - 1}
+            className={`${
+              currentPage === paginationPages.length - 1
+                ? 'bg-gray-300 cursor-not-allowed'
+                : 'bg-gray-600'
+            } px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform rounded-lg`}
+          >
             Next
           </button>
         </div>
