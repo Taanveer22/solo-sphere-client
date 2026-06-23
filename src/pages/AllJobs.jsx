@@ -8,18 +8,19 @@ const AllJobs = () => {
   const [itemsPerPage, setItemsPerPage] = useState(3);
   const [currentPage, setCurrentPage] = useState(0);
   const [filteredJobs, setFilteredJobs] = useState('');
+  const [sortedJobs, setSortedJobs] = useState('');
   const axiosCommon = useAxiosCommon();
 
   const totalPages = Math.ceil(jobsCount / itemsPerPage);
   const paginationPages = [...Array(totalPages).keys()];
 
-  console.log(filteredJobs);
+  // console.log(filteredJobs, sortedJobs);
 
   useEffect(() => {
     const getJobs = async () => {
       try {
         const res = await axiosCommon.get(
-          `/paginationJobs?page=${currentPage}&size=${itemsPerPage}&filter=${filteredJobs}`
+          `/paginationJobs?page=${currentPage}&size=${itemsPerPage}&filter=${filteredJobs}&sort=${sortedJobs}`
         );
         // console.log(res.data.jobsData);
         // console.log(res.data.jobsDataCount);
@@ -30,7 +31,7 @@ const AllJobs = () => {
       }
     };
     getJobs();
-  }, [axiosCommon, currentPage, itemsPerPage, filteredJobs]);
+  }, [axiosCommon, currentPage, itemsPerPage, filteredJobs, sortedJobs]);
 
   const handlePaginationBtnClick = (value) => {
     // console.log(value);
@@ -76,7 +77,16 @@ const AllJobs = () => {
             </div>
           </form>
           <div>
-            <select name="category" id="category" className="border p-4 rounded-md">
+            <select
+              onChange={(e) => {
+                setSortedJobs(e.target.value);
+                setCurrentPage(0);
+              }}
+              value={sortedJobs}
+              name="sort"
+              id="sort"
+              className="border p-4 rounded-md"
+            >
               <option value="">Sort By Deadline</option>
               <option value="dsc">Descending Order</option>
               <option value="asc">Ascending Order</option>
