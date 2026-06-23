@@ -4,14 +4,21 @@ import useAxiosCommon from '../hooks/useAxiosCommon';
 
 const AllJobs = () => {
   const [jobs, setJobs] = useState([]);
+  const [jobsCount, setJobsCount] = useState(0);
+  const [itemsPerPage, setItemsPerPage] = useState(2);
   const axiosCommon = useAxiosCommon();
+
+  const totalPages = Math.ceil(jobsCount / itemsPerPage);
+  const paginationPages = [...Array(totalPages).keys()].map((element) => element + 1);
 
   useEffect(() => {
     const getJobs = async () => {
       try {
-        const res = await axiosCommon.get(`/jobs`);
-        // console.log(res.data);
-        setJobs(res.data);
+        const res = await axiosCommon.get(`/paginationJobs`);
+        // console.log(res.data.jobsData);
+        // console.log(res.data.jobsDataCount);
+        setJobs(res.data.jobsData);
+        setJobsCount(res.data.jobsDataCount);
       } catch (error) {
         console.log(error);
       }
@@ -22,7 +29,8 @@ const AllJobs = () => {
   return (
     <div className="container px-6 py-10 mx-auto min-h-[calc(100vh-306px)] flex flex-col justify-between">
       <div>
-        <div className="flex flex-col md:flex-row justify-center items-center gap-5 ">
+        {/* pagination items */}
+        <div className="flex flex-col md:flex-row justify-center items-center gap-5">
           <div>
             <select name="category" id="category" className="border p-4 rounded-lg">
               <option value="">Filter By Category</option>
@@ -56,10 +64,32 @@ const AllJobs = () => {
           </div>
           <button className="btn">Reset</button>
         </div>
+
+        {/* cards */}
         <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {jobs.map((jobElement) => (
             <JobCard key={jobElement?._id} jobElement={jobElement}></JobCard>
           ))}
+        </div>
+
+        {/* pagination items */}
+        <div className="flex justify-center gap-4 mt-8 xl:mt-16">
+          <button className="px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+            Prev
+          </button>
+
+          {paginationPages.map((element) => (
+            <button
+              key={element}
+              className="px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
+            >
+              {element}
+            </button>
+          ))}
+
+          <button className="px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+            Next
+          </button>
         </div>
       </div>
     </div>
