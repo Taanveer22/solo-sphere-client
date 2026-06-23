@@ -5,16 +5,19 @@ import useAxiosCommon from '../hooks/useAxiosCommon';
 const AllJobs = () => {
   const [jobs, setJobs] = useState([]);
   const [jobsCount, setJobsCount] = useState(0);
-  const [itemsPerPage, setItemsPerPage] = useState(2);
+  const [itemsPerPage, setItemsPerPage] = useState(3);
+  const [currentPage, setCurrentPage] = useState(0);
   const axiosCommon = useAxiosCommon();
 
   const totalPages = Math.ceil(jobsCount / itemsPerPage);
-  const paginationPages = [...Array(totalPages).keys()].map((element) => element + 1);
+  const paginationPages = [...Array(totalPages).keys()];
 
   useEffect(() => {
     const getJobs = async () => {
       try {
-        const res = await axiosCommon.get(`/paginationJobs`);
+        const res = await axiosCommon.get(
+          `/paginationJobs?page=${currentPage}&size=${itemsPerPage}`
+        );
         // console.log(res.data.jobsData);
         // console.log(res.data.jobsDataCount);
         setJobs(res.data.jobsData);
@@ -24,7 +27,12 @@ const AllJobs = () => {
       }
     };
     getJobs();
-  }, [axiosCommon]);
+  }, [axiosCommon, currentPage, itemsPerPage]);
+
+  const handlePaginationBtnClick = (value) => {
+    // console.log(value);
+    setCurrentPage(value);
+  };
 
   return (
     <div className="container px-6 py-10 mx-auto min-h-[calc(100vh-306px)] flex flex-col justify-between">
@@ -72,7 +80,7 @@ const AllJobs = () => {
           ))}
         </div>
 
-        {/* pagination items */}
+        {/* pagination buttons */}
         <div className="flex justify-center gap-4 mt-8 xl:mt-16">
           <button className="px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
             Prev
@@ -80,8 +88,9 @@ const AllJobs = () => {
 
           {paginationPages.map((element) => (
             <button
+              onClick={() => handlePaginationBtnClick(element)}
               key={element}
-              className="px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
+              className={`${element === currentPage ? 'bg-blue-500 ' : ' bg-gray-600'} px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform rounded-lg focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80`}
             >
               {element}
             </button>
