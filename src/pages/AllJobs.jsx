@@ -7,16 +7,19 @@ const AllJobs = () => {
   const [jobsCount, setJobsCount] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(3);
   const [currentPage, setCurrentPage] = useState(0);
+  const [filteredJobs, setFilteredJobs] = useState('');
   const axiosCommon = useAxiosCommon();
 
   const totalPages = Math.ceil(jobsCount / itemsPerPage);
   const paginationPages = [...Array(totalPages).keys()];
 
+  console.log(filteredJobs);
+
   useEffect(() => {
     const getJobs = async () => {
       try {
         const res = await axiosCommon.get(
-          `/paginationJobs?page=${currentPage}&size=${itemsPerPage}`
+          `/paginationJobs?page=${currentPage}&size=${itemsPerPage}&filter=${filteredJobs}`
         );
         // console.log(res.data.jobsData);
         // console.log(res.data.jobsDataCount);
@@ -27,7 +30,7 @@ const AllJobs = () => {
       }
     };
     getJobs();
-  }, [axiosCommon, currentPage, itemsPerPage]);
+  }, [axiosCommon, currentPage, itemsPerPage, filteredJobs]);
 
   const handlePaginationBtnClick = (value) => {
     // console.log(value);
@@ -40,11 +43,20 @@ const AllJobs = () => {
         {/* pagination items */}
         <div className="flex flex-col md:flex-row justify-center items-center gap-5">
           <div>
-            <select name="category" id="category" className="border p-4 rounded-lg">
+            <select
+              onChange={(e) => {
+                setFilteredJobs(e.target.value);
+                setCurrentPage(0);
+              }}
+              value={filteredJobs}
+              name="category"
+              id="category"
+              className="border p-4 rounded-lg"
+            >
               <option value="">Filter By Category</option>
-              <option value="Web Development">Web Development</option>
-              <option value="Graphics Design">Graphics Design</option>
-              <option value="Digital Marketing">Digital Marketing</option>
+              <option value="web-development">Web Development</option>
+              <option value="graphics-design">Graphics Design</option>
+              <option value="digital-marketing">Digital Marketing</option>
             </select>
           </div>
 
