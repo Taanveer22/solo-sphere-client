@@ -1,109 +1,97 @@
+<div align="center">
+
 # 🌐 Solo Sphere Client
 
-Solo Sphere Client is a modern job marketplace application where buyers can post jobs and freelancers can bid.  
-It provides secure authentication, dynamic job management, bidding workflows, and advanced search with pagination.
+**A modern job marketplace platform connecting buyers and freelancers**
+
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev/)
+[![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)](https://firebase.google.com/)
+[![JWT](https://img.shields.io/badge/JWT-Auth-black?style=for-the-badge&logo=jsonwebtokens&logoColor=white)](https://jwt.io/)
+
+</div>
 
 ---
 
-## 🚀 Live Demo
-
-[Solo Sphere Live](https://solo-sphere-87a94.web.app)
+Solo Sphere is a job marketplace web application that connects buyers seeking talent with freelancers ready to bid on projects. It delivers secure authentication, dynamic job management, end-to-end bidding workflows, and advanced search with pagination — built for a smooth, production-ready user experience.
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Frontend:** React, React Router, Axios, Custom Hooks
-- **Backend:** Express.js, MongoDB, JWT Authentication
-- **Authentication:** Firebase Authentication (Login, Register, JWT verification)
-- **Deployment:** Firebase Hosting (Frontend), Vercel (Backend)
-- **Packages Used:**
-  - `axios` (with interceptors)
-  - `jsonwebtoken`
-  - `cookie-parser`
-  - `cors`
-  - `firebase`
-  - `react-router-dom`
+| Layer                 | Technology                                                  |
+| --------------------- | ----------------------------------------------------------- |
+| 🎨 **Frontend**       | React, React Router, Axios, Custom Hooks                    |
+| ⚙️ **Backend**        | Express.js, MongoDB, JWT Authentication                     |
+| 🔐 **Authentication** | Firebase Authentication (Login, Register, JWT verification) |
+| ☁️ **Hosting**        | Firebase (Frontend), Render (Backend)                       |
+
+**Key Packages:** `axios` · `jsonwebtoken` · `cookie-parser` · `cors` · `firebase` · `react-router-dom`
 
 ---
 
-## ✨ Features
+## ✨ Key Features
 
 ### 🔐 Authentication
 
-- Firebase login/register
-- JWT-based secure routes
-- Logout functionality in navbar
+- Firebase-based login and registration
+- JWT-secured private routes
+- Seamless logout functionality integrated into the navbar
 
 ### 📄 Job Management
 
-- Add, update, delete jobs
-- Show jobs by category
-- Job card details by ID
-- Buyer posted jobs table with update & delete
+- Create, update, and delete job postings
+- Browse jobs by category
+- Detailed job view by ID
+- Buyer dashboard for managing posted jobs with update and delete actions
 
 ### 💼 Freelancer Dashboard
 
-- Submit bids on jobs
-- View freelancer bids
-- Status updates for bid requests
+- Submit bids on available jobs
+- View and track personal bid history
+- Real-time status updates for bid requests
 
 ### 📑 Bid Requests
 
-- Buyer can view all bids received
-- Update bid request status
-- Show bidders’ data in dashboard
-- Bids data saved to DB with job reference
+- Buyers can review all bids received on their job postings
+- Update bid request status (accept or reject)
+- View bidder details directly from the dashboard
+- Bid data persisted to the database with job references
 
 ### 🔍 Search & Sorting
 
-- Search jobs dynamically with keyword
-- Sort jobs by fields (e.g., size, category)
+- Dynamic keyword-based job search
+- Sort jobs by fields such as size or category
 - Filter jobs by category
 
-### 📄 Pagination
+### 📊 Pagination
 
-- Dynamic pagination buttons
-- Next/Prev button handling
-- Items per page selection
+- Dynamic, responsive pagination controls
+- Next/previous navigation
+- Configurable items-per-page selection
+
+---
+
+## ☁️ Hosting
+
+| Service  | Provider             |
+| -------- | -------------------- |
+| Frontend | **Firebase Hosting** |
+| Backend  | **Render**           |
 
 ---
 
-## 📂 Project Setup
+## 📌 Future Improvements
 
-### Install Dependencies
-
-```bash
-npm install
-```
-
-📅 Development Timeline
-May 24, 2026 → Client-side setup with Firebase
-
-May 26–31, 2026 → Authentication, product forms, private routes
-
-June 1–6, 2026 → Buyer job CRUD operations, bids collection setup
-
-June 7–10, 2026 → Bid requests, freelancer dashboard, JWT integration
-
-June 23, 2026 → Search, sorting, filtering, dynamic pagination completed
-
-🌐 Deployment
-Frontend: Firebase Hosting → tech-job-portal-45406.web.app
-
-Backend: Vercel → tech-job-portal-server.vercel.app
-
-📌 Future Improvements
-Role-based dashboards (Admin, Buyer, Freelancer)
-
-Enhanced UI with TailwindCSS or Material UI
-
-Real-time notifications for bids and job updates
-
-Advanced search filters (salary range, skills, etc.)
-
-👨‍💻 Author
-Developed by Taanveer22  
-GitHub: Taanveer22
+- 🧩 Role-based dashboards (Admin, Buyer, Freelancer)
+- 🎨 Enhanced UI with TailwindCSS or Material UI
+- 🔔 Real-time notifications for bids and job updates
+- 🔎 Advanced search filters (salary range, skills, and more)
 
 ---
+
+## 👨‍💻 Author
+
+**Taanveer22**
+[GitHub Profile](https://github.com/Taanveer22)
